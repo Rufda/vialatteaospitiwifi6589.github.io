@@ -24,13 +24,18 @@
 
   <script>
     function connectToWiFi() {
-      const ssid = "Via Lattea OSPITI ;-)";
+      const ssid = "Via Lattea OOSPITI ;-)";
       const password = "0u_ewL5L$#7u8I#r?7L2@yIcUnUBR4F00a-EprUBr?6&MEbROSwE&r=Yo4_*Ju=";
       
       if (navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/)) {
-        // Genera un link Wi-Fi per dispositivi mobili
+        // Per iOS, creare un link Wi-Fi che Safari possa interpretare
         const wifiUrl = `WIFI:T:WPA;S:${ssid};P:${password};;`;
-        window.location.href = wifiUrl;
+        const hiddenElement = document.createElement('a');
+        hiddenElement.href = wifiUrl;
+        hiddenElement.style.display = 'none';
+        document.body.appendChild(hiddenElement);
+        hiddenElement.click();
+        document.body.removeChild(hiddenElement);
       } else {
         alert("Per favore, connettiti manualmente al Wi-Fi.\nSSID: " + ssid + "\nPassword: " + password);
       }
