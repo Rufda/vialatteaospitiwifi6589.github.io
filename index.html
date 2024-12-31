@@ -19,26 +19,14 @@
     <h2>Credenziali Wi-Fi</h2>
     <p><strong>SSID:</strong> Via Lattea OSPITI ;-)</p>
     <p><strong>Password:</strong> 0u_ewL5L$#7u8I#r?7L2@yIcUnUBR4F00a-EprUBr?6&MEbROSwE&r=Yo4_*Ju=</p>
-    <button onclick="connectToWiFi()">Connettiti al Wi-Fi</button>
+    <button onclick="showWiFiDetails()">Connettiti al Wi-Fi</button>
   </div>
 
   <script>
-    function connectToWiFi() {
+    function showWiFiDetails() {
       const ssid = "Via Lattea OSPITI ;-)";
       const password = "0u_ewL5L$#7u8I#r?7L2@yIcUnUBR4F00a-EprUBr?6&MEbROSwE&r=Yo4_*Ju=";
-      
-      if (navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/)) {
-        // Per iOS, creare un link Wi-Fi che Safari possa interpretare
-        const wifiUrl = `WIFI:T:WPA;S:${ssid};P:${password};;`;
-        const hiddenElement = document.createElement('a');
-        hiddenElement.href = wifiUrl;
-        hiddenElement.style.display = 'none';
-        document.body.appendChild(hiddenElement);
-        hiddenElement.click();
-        document.body.removeChild(hiddenElement);
-      } else {
-        alert("Per favore, connettiti manualmente al Wi-Fi.\nSSID: " + ssid + "\nPassword: " + password);
-      }
+      alert("SSID: " + ssid + "\nPassword: " + password);
     }
   </script>
 </body>
