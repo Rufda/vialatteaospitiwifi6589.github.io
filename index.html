@@ -16,25 +16,39 @@
       text-align: center;
       background-color: #f9f9f9;
     }
+
     button {
+      position: relative;
       padding: 10px 20px;
       font-size: 16px;
-      margin-top: 20px;
       cursor: pointer;
       background-color: #007bff;
       color: white;
       border: none;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
     }
+
     button:hover {
       background-color: #0056b3;
     }
+
     .instructions {
       margin-top: 30px;
       font-size: 16px;
       color: #555;
       line-height: 1.6;
+    }
+
+    /* Stile del gattino */
+    .cat {
+      position: absolute;
+      top: -40px;
+      width: 50px;
+      height: 50px;
+      background: url('https://cdn.pixabay.com/photo/2020/06/11/20/29/cat-5282036_960_720.png') no-repeat center center;
+      background-size: contain;
     }
   </style>
 </head>
@@ -43,27 +57,51 @@
   <button id="copyButton">Copia Password</button>
   <div class="instructions">
     <p>1. Premi il pulsante <strong>"Copia Password"</strong>.</p>
-    <p>2. Sul tuo iPhone vai su <strong>Impostazioni</strong> &gt; <strong>Wi-Fi</strong>.</p>
+    <p>2. Vai su <strong>Impostazioni</strong> &gt; <strong>Wi-Fi</strong> sul tuo dispositivo.</p>
     <p>3. Cerca la rete <strong>"Via Lattea OSPITI ;-)"</strong> nell'elenco.</p>
     <p>4. Incolla la password copiata per connetterti.</p>
   </div>
 
   <script>
-    // Definizione della password Wi-Fi
     const password = "0u_ewL5L$#7u8I#r?7L2@yIcUnUBR4F00a-EprUBr?6&MEbROSwE&r=Yo4_*Ju=";
 
-    // Aggiungi un evento click al pulsante
-    document.getElementById('copyButton').addEventListener('click', () => {
-      // Usa l'API Clipboard per copiare la password
+    // Aggiungi un evento al pulsante per copiare la password
+    const button = document.getElementById('copyButton');
+    button.addEventListener('click', () => {
       navigator.clipboard.writeText(password).then(() => {
-        // Conferma che la password è stata copiata
         alert("Password copiata negli appunti!");
       }).catch(err => {
-        // Gestione degli errori
         console.error("Errore durante la copia della password: ", err);
         alert("Impossibile copiare la password. Copiala manualmente:\n" + password);
       });
     });
+
+    // Aggiungi il gattino e animazione
+    const cat = document.createElement('div');
+    cat.classList.add('cat');
+    document.body.appendChild(cat);
+
+    function animateCat() {
+      const buttonRect = button.getBoundingClientRect();
+      let left = buttonRect.left - 60; // Partenza fuori dal pulsante
+      const top = buttonRect.top - 50; // Sopra il pulsante
+
+      cat.style.left = `${left}px`;
+      cat.style.top = `${top}px`;
+
+      const interval = setInterval(() => {
+        left += 5; // Sposta il gattino a destra
+        cat.style.left = `${left}px`;
+
+        // Ferma l'animazione quando il gattino è uscito
+        if (left > buttonRect.right + 60) {
+          clearInterval(interval);
+        }
+      }, 50);
+    }
+
+    // Avvia l'animazione quando la pagina è caricata
+    window.onload = animateCat;
   </script>
 </body>
 </html>
