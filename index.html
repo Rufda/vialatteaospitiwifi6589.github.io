@@ -16,20 +16,52 @@
       text-align: center;
       background-color: #f9f9f9;
     }
+
     button {
+      position: relative;
       padding: 10px 20px;
       font-size: 16px;
-      margin-top: 20px;
       cursor: pointer;
       background-color: #007bff;
       color: white;
       border: none;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
     }
+
     button:hover {
       background-color: #0056b3;
     }
+
+    /* Il contenitore del gattino */
+    .cat-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Il gattino che cammina */
+    .cat {
+      position: absolute;
+      top: -30px; /* Posizionamento sopra il pulsante */
+      left: -60px; /* Partenza a sinistra del pulsante */
+      width: 50px;
+      height: 50px;
+      background: url('https://cdn.pixabay.com/photo/2020/06/11/20/29/cat-5282036_960_720.png') no-repeat center center;
+      background-size: contain;
+      animation: walk 4s linear infinite;
+    }
+
+    /* Animazione del movimento del gattino */
+    @keyframes walk {
+      from {
+        left: -60px; /* Inizio fuori a sinistra */
+      }
+      to {
+        left: calc(100% + 60px); /* Fine fuori a destra */
+      }
+    }
+
     .instructions {
       margin-top: 30px;
       font-size: 16px;
@@ -40,7 +72,13 @@
 </head>
 <body>
   <h1>Accesso Wi-Fi</h1>
-  <button id="copyButton">Copia Password</button>
+
+  <!-- Contenitore del pulsante con il gattino sopra -->
+  <div class="cat-container">
+    <button id="copyButton">Copia Password</button>
+    <div class="cat"></div>
+  </div>
+
   <div class="instructions">
     <p>1. Premi il pulsante <strong>"Copia Password"</strong>.</p>
     <p>2. Vai su <strong>Impostazioni</strong> &gt; <strong>Wi-Fi</strong> sul tuo dispositivo.</p>
@@ -54,12 +92,9 @@
 
     // Aggiungi un evento click al pulsante
     document.getElementById('copyButton').addEventListener('click', () => {
-      // Usa l'API Clipboard per copiare la password
       navigator.clipboard.writeText(password).then(() => {
-        // Conferma che la password è stata copiata
         alert("Password copiata negli appunti!");
       }).catch(err => {
-        // Gestione degli errori
         console.error("Errore durante la copia della password: ", err);
         alert("Impossibile copiare la password. Copiala manualmente:\n" + password);
       });
