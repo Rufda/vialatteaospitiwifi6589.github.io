@@ -1,11 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title>Accesso Wi-Fi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style type="text/css">
+  <title>Accesso Wi-Fi</title>
+  <style>
     body {
       display: flex;
       flex-direction: column;
@@ -14,33 +13,44 @@
       height: 100vh;
       margin: 0;
       font-family: Helvetica, Arial, sans-serif;
+      text-align: center;
     }
     button {
       padding: 10px 20px;
       font-size: 16px;
-    }
-    #qrcode {
       margin-top: 20px;
+      cursor: pointer;
+    }
+    .instructions {
+      margin-top: 30px;
+      font-size: 16px;
+      color: #555;
+      line-height: 1.6;
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
 </head>
 <body>
-  <div id="content">
-    <button onclick="generateQRCode()">Connettiti al Wi-Fi</button>
-    <div id="qrcode"></div>
+  <h1>Accesso Wi-Fi</h1>
+  <p id="ssid">SSID: <strong>Via Lattea OSPITI ;-)</strong></p>
+  <button id="copyButton">Copia Password</button>
+  <div class="instructions">
+    <p>1. Premi il pulsante "Copia Password".</p>
+    <p>2. Vai su <strong>Impostazioni</strong> &gt; <strong>Wi-Fi</strong> sul tuo dispositivo.</p>
+    <p>3. Cerca la rete <strong>"Via Lattea OSPITI ;-)"</strong> nell'elenco.</p>
+    <p>4. Incolla la password copiata per connetterti.</p>
   </div>
 
   <script>
-    function generateQRCode() {
-      const ssid = "Via Lattea OSPITI ;-)";
-      const password = "0u_ewL5L$#7u8I#r?7L2@yIcUnUBR4F00a-EprUBr?6&MEbROSwE&r=Yo4_*Ju=";
-      const qrCodeData = `WIFI:T:WPA;S:${ssid};P:${password};;`;
-      QRCode.toCanvas(document.getElementById('qrcode'), qrCodeData, function (error) {
-        if (error) console.error(error);
-        console.log('QR code generato con successo!');
+    const password = "0u_ewL5L$#7u8I#r?7L2@yIcUnUBR4F00a-EprUBr?6&MEbROSwE&r=Yo4_*Ju=";
+
+    document.getElementById('copyButton').addEventListener('click', () => {
+      navigator.clipboard.writeText(password).then(() => {
+        alert("Password copiata negli appunti!");
+      }).catch(err => {
+        console.error("Errore durante la copia della password: ", err);
+        alert("Impossibile copiare la password. Per favore, copiala manualmente.");
       });
-    }
+    });
   </script>
 </body>
 </html>
