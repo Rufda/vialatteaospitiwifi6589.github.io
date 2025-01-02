@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Accesso Wi-Fi</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.14/lottie.min.js"></script>
   <style>
     body {
       display: flex;
@@ -16,52 +17,23 @@
       text-align: center;
       background-color: #f9f9f9;
     }
-
+    #cat-animation {
+      margin-bottom: 20px;
+    }
     button {
-      position: relative;
       padding: 10px 20px;
       font-size: 16px;
+      margin-top: 20px;
       cursor: pointer;
       background-color: #007bff;
       color: white;
       border: none;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
     }
-
     button:hover {
       background-color: #0056b3;
     }
-
-    /* Il contenitore del gattino */
-    .cat-container {
-      position: relative;
-      display: inline-block;
-    }
-
-    /* Il gattino che cammina */
-    .cat {
-      position: absolute;
-      top: -60px; /* Posizionamento sopra il pulsante */
-      left: -60px; /* Partenza a sinistra del pulsante */
-      width: 50px;
-      height: 50px;
-      background: url('https://cdn.pixabay.com/photo/2020/06/11/20/29/cat-5282036_960_720.png') no-repeat center center;
-      background-size: contain;
-      animation: walk 4s linear infinite;
-    }
-
-    /* Animazione del movimento del gattino */
-    @keyframes walk {
-      from {
-        left: -60px; /* Inizio fuori a sinistra */
-      }
-      to {
-        left: calc(100% + 160px); /* Fine fuori a destra */
-      }
-    }
-
     .instructions {
       margin-top: 30px;
       font-size: 16px;
@@ -72,32 +44,38 @@
 </head>
 <body>
   <h1>Accesso Wi-Fi</h1>
-
-  <!-- Contenitore del pulsante con il gattino sopra -->
-  <div class="cat-container">
-    <button id="copyButton">Copia Password</button>
-    <div class="cat"></div>
-  </div>
-
+  <div id="cat-animation" style="width: 200px; height: 100px;"></div>
+  <button id="copyButton">Copia Password</button>
   <div class="instructions">
     <p>1. Premi il pulsante <strong>"Copia Password"</strong>.</p>
     <p>2. Vai su <strong>Impostazioni</strong> &gt; <strong>Wi-Fi</strong> sul tuo dispositivo.</p>
     <p>3. Cerca la rete <strong>"Via Lattea OSPITI ;-)"</strong> nell'elenco.</p>
     <p>4. Incolla la password copiata per connetterti.</p>
   </div>
-
   <script>
     // Definizione della password Wi-Fi
     const password = "0u_ewL5L$#7u8I#r?7L2@yIcUnUBR4F00a-EprUBr?6&MEbROSwE&r=Yo4_*Ju=";
 
     // Aggiungi un evento click al pulsante
     document.getElementById('copyButton').addEventListener('click', () => {
+      // Usa l'API Clipboard per copiare la password
       navigator.clipboard.writeText(password).then(() => {
+        // Conferma che la password è stata copiata
         alert("Password copiata negli appunti!");
       }).catch(err => {
+        // Gestione degli errori
         console.error("Errore durante la copia della password: ", err);
         alert("Impossibile copiare la password. Copiala manualmente:\n" + password);
       });
+    });
+
+    // Carica l'animazione Lottie
+    var animation = lottie.loadAnimation({
+      container: document.getElementById('cat-animation'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'https://assets5.lottiefiles.com/packages/lf20_bXRG9q.json'
     });
   </script>
 </body>
